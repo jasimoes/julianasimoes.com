@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Juliana Simoes — Interactive Resume</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --teal: #0d9488;
+    --teal-light: #14b8a6;
+    --teal-pale: #f0fdfa;
+    --teal-border: #99f6e4;
+    --navy: #0f172a;
+    --slate: #475569;
+    --slate-light: #94a3b8;
+    --white: #ffffff;
+    --off-white: #f8fafc;
+    --border: #e2e8f0;
+    --gold: #d4af37;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--navy);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 24px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .header-left h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    color: var(--navy);
+    letter-spacing: -0.3px;
+  }
+
+  .header-left p {
+    font-size: 14px;
+    color: var(--slate);
+    margin-top: 4px;
+    font-weight: 400;
+  }
+
+  .header-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--teal-pale);
+    border: 1px solid var(--teal-border);
+    border-radius: 100px;
+    padding: 8px 16px;
+    font-size: 13px;
+    color: var(--teal);
+    font-weight: 500;
+  }
+
+  .dot {
+    width: 8px; height: 8px;
+    background: var(--teal);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* MAIN LAYOUT */
+  .layout {
+    display: flex;
+    flex: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 32px 24px;
+    gap: 32px;
+    align-items: flex-start;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: 280px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .profile-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+  }
+
+  .avatar {
+    width: 72px; height: 72px;
+    background: linear-gradient(135deg, var(--teal), #0891b2);
+    border-radius: 50%;
+    margin: 0 auto 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    color: white;
+  }
+
+  .profile-card h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .profile-card .role {
+    font-size: 12px;
+    color: var(--teal);
+    font-weight: 500;
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  .profile-card .location {
+    font-size: 12px;
+    color: var(--slate-light);
+    margin-top: 8px;
+  }
+
+  .contact-links {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--off-white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--slate);
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+
+  .contact-link:hover {
+    background: var(--teal-pale);
+    border-color: var(--teal-border);
+    color: var(--teal);
+  }
+
+  .suggestions-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+  }
+
+  .suggestions-card h3 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--slate);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+  }
+
+  .suggestion-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    background: var(--off-white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--slate);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+    line-height: 1.4;
+  }
+
+  .suggestion-btn:hover {
+    background: var(--teal-pale);
+    border-color: var(--teal-border);
+    color: var(--teal);
+  }
+
+  .suggestion-btn:last-child { margin-bottom: 0; }
+
+  /* CHAT AREA */
+  .chat-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    min-width: 0;
+  }
+
+  .chat-window {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    height: 600px;
+    overflow: hidden;
+  }
+
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    scroll-behavior: smooth;
+  }
+
+  .chat-messages::-webkit-scrollbar { width: 4px; }
+  .chat-messages::-webkit-scrollbar-track { background: transparent; }
+  .chat-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  /* MESSAGES */
+  .message {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    animation: fadeUp 0.3s ease;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .message.user { flex-direction: row-reverse; }
+
+  .msg-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .message.assistant .msg-avatar {
+    background: linear-gradient(135deg, var(--teal), #0891b2);
+    color: white;
+  }
+
+  .message.user .msg-avatar {
+    background: var(--navy);
+    color: white;
+    font-size: 12px;
+  }
+
+  .msg-bubble {
+    max-width: 80%;
+    padding: 14px 18px;
+    border-radius: 16px;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .message.assistant .msg-bubble {
+    background: var(--teal-pale);
+    border: 1px solid var(--teal-border);
+    color: var(--navy);
+    border-top-left-radius: 4px;
+  }
+
+  .message.user .msg-bubble {
+    background: var(--navy);
+    color: var(--white);
+    border-top-right-radius: 4px;
+  }
+
+  .msg-bubble strong { font-weight: 600; }
+  .msg-bubble em { color: var(--teal); font-style: normal; font-weight: 500; }
+
+  .contact-footer {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--teal-border);
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .contact-footer a {
+    font-size: 12px;
+    color: var(--teal);
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .contact-footer a:hover { text-decoration: underline; }
+
+  /* TYPING INDICATOR */
+  .typing-indicator {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .typing-dots {
+    display: flex;
+    gap: 4px;
+    padding: 14px 18px;
+    background: var(--teal-pale);
+    border: 1px solid var(--teal-border);
+    border-radius: 16px;
+    border-top-left-radius: 4px;
+  }
+
+  .typing-dots span {
+    width: 6px; height: 6px;
+    background: var(--teal);
+    border-radius: 50%;
+    animation: bounce 1.2s infinite;
+  }
+
+  .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes bounce {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-6px); }
+  }
+
+  /* INPUT */
+  .chat-input-area {
+    padding: 16px 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+    background: var(--white);
+  }
+
+  .chat-input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--navy);
+    background: var(--off-white);
+    resize: none;
+    outline: none;
+    transition: border-color 0.2s;
+    line-height: 1.5;
+    max-height: 120px;
+    overflow-y: auto;
+  }
+
+  .chat-input:focus {
+    border-color: var(--teal);
+    background: var(--white);
+  }
+
+  .chat-input::placeholder { color: var(--slate-light); }
+
+  .send-btn {
+    width: 44px; height: 44px;
+    background: var(--teal);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+
+  .send-btn:hover { background: #0f766e; transform: scale(1.05); }
+  .send-btn:disabled { background: var(--border); cursor: not-allowed; transform: none; }
+
+  .send-btn svg { width: 18px; height: 18px; fill: white; }
+
+  /* STATS BAR */
+  .stats-bar {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 24px;
+    display: flex;
+    gap: 32px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .stat-value {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--teal);
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: var(--slate-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .layout { flex-direction: column; padding: 16px; }
+    .sidebar { width: 100%; }
+    header { padding: 16px 20px; }
+    .stats-bar { gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <h1>Juliana Simoes</h1>
+    <p>Director of Program Management · NPI & Global Operations · Hardware</p>
+  </div>
+  <div class="header-badge">
+    <div class="dot"></div>
+    AI-Powered Resume · Ask me anything
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <div class="profile-card">
+      <div class="avatar">JS</div>
+      <h2>Juliana Simoes</h2>
+      <div class="role">Director of Program Management<br>NPI & Global Operations</div>
+      <div class="location">📍 Greater Boston, MA</div>
+      <div class="contact-links">
+        <a href="mailto:jasimoes@outlook.com" class="contact-link">
+          ✉️ jasimoes@outlook.com
+        </a>
+        <a href="https://www.linkedin.com/in/simoesja" target="_blank" class="contact-link">
+          💼 linkedin.com/in/simoesja
+        </a>
+      </div>
+    </div>
+
+    <div class="suggestions-card">
+      <h3>Try asking</h3>
+      <button class="suggestion-btn" onclick="sendSuggestion(this.textContent)">Tell me about your global operations experience</button>
+      <button class="suggestion-btn" onclick="sendSuggestion(this.textContent)">What makes you different from other candidates?</button>
+      <button class="suggestion-btn" onclick="sendSuggestion(this.textContent)">Describe a program you built from scratch</button>
+      <button class="suggestion-btn" onclick="sendSuggestion(this.textContent)">What industries have you worked in?</button>
+      <button class="suggestion-btn" onclick="sendSuggestion(this.textContent)">What are you looking for in your next role?</button>
+      <button class="suggestion-btn" onclick="sendSuggestion(this.textContent)">How do you use AI in your work?</button>
+      <button class="suggestion-btn" onclick="sendSuggestion(this.textContent)">Are you open to relocation?</button>
+    </div>
+
+  </aside>
+
+  <!-- CHAT -->
+  <div class="chat-container">
+    <div class="chat-window">
+      <div class="chat-messages" id="messages">
+
+        <!-- Welcome message -->
+        <div class="message assistant">
+          <div class="msg-avatar">JS</div>
+          <div class="msg-bubble">
+            Hi — I'm Juliana's AI-powered resume. I can answer any questions you have about her background, experience, leadership style, or what she's looking for next.<br><br>
+            Feel free to ask anything — from specific programs she's led, to how she works, to what kind of opportunity she's open to. I'll give you real, specific answers drawn from her actual experience.<br><br>
+            <em>What would you like to know?</em>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="chat-input-area">
+        <textarea
+          class="chat-input"
+          id="userInput"
+          placeholder="Ask about Juliana's experience, skills, or what she's looking for..."
+          rows="1"
+          onkeydown="handleKey(event)"
+          oninput="autoResize(this)"
+        ></textarea>
+        <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+          <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stat">
+        <div class="stat-value">20+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">7</div>
+        <div class="stat-label">Countries</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">112K+</div>
+        <div class="stat-label">Units Delivered</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">10+</div>
+        <div class="stat-label">Industries Served</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">2</div>
+        <div class="stat-label">PMOs Built</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const SYSTEM_PROMPT = `You are an AI representing Juliana Simoes in her job search. You answer questions from recruiters and hiring managers about her background, experience, skills, leadership style, and career goals. You speak warmly and professionally — as if you are Juliana herself, in first person. You are confident but not arrogant. You are specific, drawing on real details from her background. You never make up information.
+
+Here is Juliana's complete background:
+
+CURRENT ROLE:
+- Project Manager, Operations & Contract Manufacturing at maxon USA (June 2022 – Present, Taunton, MA)
+- Built the PMO function from scratch — establishing governance, portfolio tracking, and stage-gate processes
+- Managed 8–10 concurrent programs across robotics, defense, aerospace, and medical device customers
+- Coordinated across US, Korean, Swiss, German, and UK operations
+- Named Project Leader on a program sponsored by the COO of maxon Switzerland to build a 48-hour rapid sample delivery capability — designed to scale globally and support e-commerce integration
+- Coordinated the transfer of high-volume Symbotic production from Taunton to Korea — managing inventory planning, intersite sequencing, and supplier coordination through project completion, with 112,000+ motor assemblies shipped
+- Contributed to establishing the maxon USA repair division — helped structure the operational framework and managed projects through the RMA workflow and customer-facing resolution process
+- Authored the Contract Manufacturing process roadmap
+- Managed programs for Symbotic, Anduril, Joby Aviation, Solta Medical, Varian, J&J, QinetiQ, Magnatech, Halliburton, Schlumberger
+- Coordinated with maxon Switzerland HQ, Germany engineering, and Parvalux UK
+- Presented at global operations management meetings
+- Leveraged Microsoft Copilot for program documentation and stakeholder reporting
+
+BOSE CORPORATION (October 2013 – June 2022, Framingham, MA):
+- Title: Lead Mechanical Engineer — but functioned as de facto Program Manager
+- Led 3–4 concurrent hardware programs in Consumer Electronics Division from architecture through production
+- Primary interface with CM/JDM partners across China, Malaysia, and Taiwan
+- Translated business requirements into technical specs, managed engineering rigor at partner sites, traveled internationally
+- Led program status reporting, design reviews, cross-functional team leadership
+- Brought to market: ST Adapter, SoundTouch 10, SoundTouch SA-5 Amplifier, SoundDock XT, Solo 15, Home Speaker 300, QuietComfort 35 II Gaming Headset
+- Led cost reduction programs during supply disruptions
+- Applied Lean Six Sigma (DFLSS Yellow Belt, PDCA), performed DOEs with global teams
+
+EARLIER EXPERIENCE:
+- APC by Schneider Electric (2001–2008): Promoted to Project Manager & Lead ME for OEM UPS programs across US, European, Asian markets
+- Zebra Technologies (2010–2012): Developed 4 mobile printer lines (EZ320, QLn220, QLn320, QLn420)
+- GTECH, DCI Engineering, Icon International: various engineering roles
+
+EDUCATION:
+- MS Engineering Management, Tufts University (2004–2006)
+- BS Mechanical Engineering, UMass Amherst
+- Certificate in Applied Project Management, Boston University
+- Certificate in Disruptive Strategy, Harvard Business School Online
+- Plastics Engineering, UMass Lowell (GPA 3.85)
+
+CERTIFICATIONS:
+- Lean Six Sigma Yellow Belt (PDCA & DFLSS)
+- Microsoft Copilot Certification (in progress)
+- Google AI Essentials (in progress)
+- Patent: Bezel for power supply
+
+SKILLS & TOOLS:
+- Program Management, NPI, PMO Leadership, Portfolio Management
+- Global Contract Manufacturing, CM/JDM Management, Production Transfer
+- Supply Chain Management, Stakeholder Management, Risk Management
+- Stage-Gate Process, Change Management, Strategic Planning
+- Hardware Development, Consumer Electronics, DFM, Lean Six Sigma
+- Defense & Aerospace, Medical Device Manufacturing, Robotics
+- Microsoft Copilot, AI tools (Claude, ChatGPT, Gemini) — personal use
+- Jira, Confluence, SharePoint, Siemens NX, Windchill
+
+AI & TECHNOLOGY:
+- Uses Microsoft Copilot professionally at maxon for documentation and reporting
+- Independently built apps, websites, and AI-powered tools using Claude and ChatGPT
+- Built this AI-powered interactive resume — without a software background
+- Uses AI tools personally to expand capabilities and solve problems creatively
+
+WHAT SHE'S LOOKING FOR:
+- Executive or senior leadership role: Director of Program Management, VP of Operations, Head of Operations, Head of NPI
+- Open to opportunities she hasn't considered yet — purpose is her primary filter
+- Wants work that matters, where she can make a difference and be seen as important
+- Wants a leadership role, not an individual contributor position
+- Looking for respect, good compensation, and a position with purpose
+- Greater Boston area, open to hybrid or remote
+- Open to new industries she hasn't worked in before
+
+PERSONAL LEADERSHIP STYLE:
+- Sees a gap, builds the thing that fills it, doesn't wait for permission
+- Brings structure to complexity and visibility to risk
+- Warm, collaborative, but decisive
+- Comfortable presenting to COO-level stakeholders and global leadership
+- Believes in doing work that matters and having purpose
+
+LANGUAGES: English (native), Portuguese (native/bilingual), Spanish (limited working)
+
+CONTACT:
+- Email: jasimoes@outlook.com
+- LinkedIn: https://www.linkedin.com/in/simoesja
+- Location: Greater Boston (Cumberland, RI)
+
+INSTRUCTIONS:
+- Always answer in first person as Juliana
+- Be warm, specific, and professional
+- Draw on real details — be concrete, not vague
+- Keep answers to 3–5 sentences for simple questions, more for complex ones
+- End every response with a brief invitation to ask more
+- Do NOT add the contact footer in every message — only add it when the person seems to be wrapping up, asking about availability, or asking how to reach Juliana`;
+
+let conversationHistory = [];
+let isLoading = false;
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+}
+
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+}
+
+function sendSuggestion(text) {
+  document.getElementById('userInput').value = text;
+  sendMessage();
+}
+
+function addMessage(role, content, showContact = false) {
+  const messages = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = `message ${role}`;
+
+  const avatarText = role === 'assistant' ? 'JS' : 'You';
+  
+  let contactHTML = '';
+  if (showContact && role === 'assistant') {
+    contactHTML = `
+      <div class="contact-footer">
+        <a href="mailto:jasimoes@outlook.com">✉️ jasimoes@outlook.com</a>
+        <a href="https://www.linkedin.com/in/simoesja" target="_blank">💼 LinkedIn Profile</a>
+      </div>`;
+  }
+
+  div.innerHTML = `
+    <div class="msg-avatar">${avatarText}</div>
+    <div class="msg-bubble">${content}${contactHTML}</div>
+  `;
+
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function addTypingIndicator() {
+  const messages = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = 'typing-indicator';
+  div.id = 'typing';
+  div.innerHTML = `
+    <div class="msg-avatar" style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#0d9488,#0891b2);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:white;flex-shrink:0;">JS</div>
+    <div class="typing-dots"><span></span><span></span><span></span></div>
+  `;
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function removeTypingIndicator() {
+  const el = document.getElementById('typing');
+  if (el) el.remove();
+}
+
+function shouldShowContact(userMessage) {
+  const keywords = ['contact', 'reach', 'email', 'available', 'interview', 'connect', 'hire', 'interested', 'talk', 'meeting', 'schedule'];
+  return keywords.some(k => userMessage.toLowerCase().includes(k));
+}
+
+async function sendMessage() {
+  if (isLoading) return;
+
+  const input = document.getElementById('userInput');
+  const userText = input.value.trim();
+  if (!userText) return;
+
+  input.value = '';
+  input.style.height = 'auto';
+
+  addMessage('user', userText);
+
+  conversationHistory.push({ role: 'user', content: userText });
+
+  isLoading = true;
+  document.getElementById('sendBtn').disabled = true;
+  addTypingIndicator();
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: SYSTEM_PROMPT,
+        messages: conversationHistory
+      })
+    });
+
+    const data = await response.json();
+    const reply = data.content?.[0]?.text || "I'm sorry, I couldn't generate a response. Please try again.";
+
+    conversationHistory.push({ role: 'assistant', content: reply });
+
+    removeTypingIndicator();
+
+    const showContact = shouldShowContact(userText);
+    addMessage('assistant', reply.replace(/\n/g, '<br>'), showContact);
+
+  } catch (err) {
+    removeTypingIndicator();
+    addMessage('assistant', "I'm having trouble connecting right now. Please try again in a moment, or reach out to Juliana directly at jasimoes@outlook.com", true);
+  }
+
+  isLoading = false;
+  document.getElementById('sendBtn').disabled = false;
+  document.getElementById('userInput').focus();
+}
+</script>
+
+</body>
+</html>
